@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import ImageRing, { WishSample } from "@/components/ImageRing";
 import Link from "next/link";
-import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const flipWords = [
   "HAPPY BIRTHDAY",
@@ -12,7 +12,7 @@ const flipWords = [
   "SPECIAL MOMENTS",
 ];
 
-const clothVariants: Variants = {
+const clothVariants = {
   hidden: {
     opacity: 0,
     rotateY: -75,
@@ -29,7 +29,7 @@ const clothVariants: Variants = {
     x: 0,
     filter: "blur(0px)",
     transition: {
-      type: "spring",
+      type: "spring" as const,
       damping: 18,
       stiffness: 90,
       mass: 0.9,
@@ -44,7 +44,7 @@ const clothVariants: Variants = {
     filter: "blur(4px)",
     transition: {
       duration: 0.35,
-      ease: "easeInOut",
+      ease: "easeInOut" as const,
     },
   },
 };
@@ -83,7 +83,7 @@ export default function Home() {
           <span>✨</span> Make Unforgettable Memories
         </span>
 
-        {/* Dynamic 3D Flipping Headline with Extruded Text Depth */}
+        {/* Dynamic 3D Flipping Headline */}
         <div
           className="relative h-20 sm:h-28 md:h-32 flex items-center justify-center"
           style={{ perspective: 1200 }}
@@ -176,7 +176,6 @@ export default function Home() {
               className="pointer-events-auto relative w-full overflow-hidden rounded-3xl border border-white/20 bg-zinc-950/85 p-6 shadow-2xl backdrop-blur-2xl text-white origin-right"
               style={{ transformStyle: "preserve-3d" }}
             >
-              {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setSelectedCard(null)}
@@ -186,7 +185,6 @@ export default function Home() {
                 ✕
               </button>
 
-              {/* Card Image */}
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-inner border border-white/10">
                 <img
                   src={selectedCard.imageUrl}
@@ -198,7 +196,6 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Card Content */}
               <div className="mt-5 space-y-3">
                 <h3 className="text-2xl font-bold tracking-tight text-white">
                   Dear {selectedCard.recipient},
