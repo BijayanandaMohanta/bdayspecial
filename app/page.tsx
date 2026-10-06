@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import ImageRing, { WishSample } from "@/components/ImageRing";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 
 const flipWords = [
   "HAPPY BIRTHDAY",
@@ -12,7 +12,7 @@ const flipWords = [
   "SPECIAL MOMENTS",
 ];
 
-const clothVariants = {
+const clothVariants: Variants = {
   hidden: {
     opacity: 0,
     rotateY: -75,
@@ -71,7 +71,7 @@ export default function Home() {
       {/* 2. Soft Edge Radial Vignette */}
       <div className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,transparent_35%,rgba(0,0,0,0.65)_75%,#000000_100%)]" />
 
-      {/* 3. Hero Copy with True Volumetric 3D Flipping Title */}
+      {/* 3. Hero Copy with 3D Flipping Title */}
       <div
         className={`pointer-events-none relative z-20 flex min-h-screen flex-col justify-center px-6 transition-all duration-700 ease-out ${
           selectedCard
