@@ -12,43 +12,6 @@ const flipWords = [
   "SPECIAL MOMENTS",
 ];
 
-const clothVariants = {
-  hidden: {
-    opacity: 0,
-    rotateY: -75,
-    skewY: 6,
-    scale: 0.88,
-    x: 120,
-    filter: "blur(6px)",
-  },
-  visible: {
-    opacity: 1,
-    rotateY: 0,
-    skewY: 0,
-    scale: 1,
-    x: 0,
-    filter: "blur(0px)",
-    transition: {
-      type: "spring" as const,
-      damping: 18,
-      stiffness: 90,
-      mass: 0.9,
-    },
-  },
-  exit: {
-    opacity: 0,
-    rotateY: 65,
-    skewY: -4,
-    scale: 0.88,
-    x: 100,
-    filter: "blur(4px)",
-    transition: {
-      duration: 0.35,
-      ease: "easeInOut" as const,
-    },
-  },
-};
-
 export default function Home() {
   const [selectedCard, setSelectedCard] = useState<WishSample | null>(null);
   const [wordIndex, setWordIndex] = useState(0);
@@ -83,7 +46,7 @@ export default function Home() {
           <span>✨</span> Make Unforgettable Memories
         </span>
 
-        {/* Dynamic 3D Flipping Headline */}
+        {/* Dynamic 3D Flipping Headline with Volumetric Text Depth */}
         <div
           className="relative h-20 sm:h-28 md:h-32 flex items-center justify-center"
           style={{ perspective: 1200 }}
@@ -163,19 +126,46 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 4. Cloth-Flip Card on the Right Side */}
+      {/* 4. Cloth-Flip Card on the Right Side (Inlined transition props - zero TS build issues) */}
       <div className="fixed inset-y-0 right-0 z-40 flex w-full max-w-md items-center justify-center p-4 sm:p-6 lg:right-14 pointer-events-none [perspective:1400px]">
         <AnimatePresence mode="wait">
           {selectedCard && (
             <motion.div
               key={selectedCard.id}
-              variants={clothVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              initial={{
+                opacity: 0,
+                rotateY: -75,
+                skewY: 6,
+                scale: 0.88,
+                x: 120,
+                filter: "blur(6px)",
+              }}
+              animate={{
+                opacity: 1,
+                rotateY: 0,
+                skewY: 0,
+                scale: 1,
+                x: 0,
+                filter: "blur(0px)",
+              }}
+              exit={{
+                opacity: 0,
+                rotateY: 65,
+                skewY: -4,
+                scale: 0.88,
+                x: 100,
+                filter: "blur(4px)",
+              }}
+              transition={{
+                type: "spring",
+                damping: 18,
+                stiffness: 90,
+                mass: 0.9,
+              }}
               className="pointer-events-auto relative w-full overflow-hidden rounded-3xl border border-white/20 bg-zinc-950/85 p-6 shadow-2xl backdrop-blur-2xl text-white origin-right"
               style={{ transformStyle: "preserve-3d" }}
             >
+              {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setSelectedCard(null)}
@@ -185,6 +175,7 @@ export default function Home() {
                 ✕
               </button>
 
+              {/* Card Image */}
               <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl shadow-inner border border-white/10">
                 <img
                   src={selectedCard.imageUrl}
@@ -196,6 +187,7 @@ export default function Home() {
                 </span>
               </div>
 
+              {/* Card Content */}
               <div className="mt-5 space-y-3">
                 <h3 className="text-2xl font-bold tracking-tight text-white">
                   Dear {selectedCard.recipient},
